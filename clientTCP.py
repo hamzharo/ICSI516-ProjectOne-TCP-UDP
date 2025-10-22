@@ -3,12 +3,17 @@ import sys
 import os
 
 def client_program(server_ip, server_port):
+    # fake_ip = os.getenv("FAKE_IP")  # check if user set it
+    # print(f"FAKE_IP: {fake_ip}")
     while True:
         command = input("Enter command (put/get/quit): ").strip()
         parts = command.split()
 
         if not parts:
             continue
+
+        # if fake_ip:
+        #     command = f"{command} {fake_ip}"
         cmd = parts[0]
 
         # QUIT
@@ -21,7 +26,9 @@ def client_program(server_ip, server_port):
 
         # PUT
         elif cmd == "put" and len(parts) == 2:
+            print("WE ARE IN PUT")
             filepath = parts[1]
+            print(f"File path: {filepath}")
             if not os.path.exists(filepath):
                 print("File not found.")
                 continue
@@ -55,8 +62,8 @@ def client_program(server_ip, server_port):
                     pass
 
                 elif status == "FOUND":
-                    os.makedirs("Client_dir", exist_ok=True)
-                    save_path = os.path.join("Client_dir", filename)
+                    os.makedirs("uploads", exist_ok=True)
+                    save_path = os.path.join("downloads", filename)
 
                     with open(save_path, "wb") as f:
                         while True:
@@ -76,5 +83,5 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: python3 clientTCP.py <server_ip> <server_port>")
         sys.exit(1)
-
+    print(f"{sys.argv[1]}, {sys.argv[2]}")
     client_program(sys.argv[1], int(sys.argv[2]))

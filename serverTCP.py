@@ -23,10 +23,15 @@ def start_server(port):
         parts = command.split()
         cmd = parts[0]
 
+        # parts = command.split()
+        # cmd = parts[0]
+        # fake_ip = parts[-1] if len(parts) > 2 else None
+        # client_ip = fake_ip if fake_ip else addr[0]
+
         # Handle PUT
         if cmd == "put" and len(parts) == 2:
             filename = os.path.basename(parts[1])
-            client_folder = os.path.join("Server_dir", client_ip)
+            client_folder = os.path.join("uploads", client_ip)
             os.makedirs(client_folder, exist_ok=True)
             filepath = os.path.join(client_folder, filename)
 
@@ -45,7 +50,7 @@ def start_server(port):
         # Handle GET
         elif cmd == "get" and len(parts) == 2:
             filename = os.path.basename(parts[1])
-            filepath = os.path.join("Server_dir", client_ip, filename)
+            filepath = os.path.join("uploads", client_ip, filename)
 
             if os.path.exists(filepath):
                 conn.sendall(b"FOUND")
