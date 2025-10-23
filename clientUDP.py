@@ -64,7 +64,7 @@ def receiver_receive_file(sock, peer_addr, save_path, expected_bytes):
 
     pkt, _ = recv_with_timeout(sock, TIMEOUT_S)
     if pkt is None:
-        print("Did not receive data. Terminating.")
+        # print("Did not receive data. Terminating.")
         return False
 
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
@@ -99,7 +99,7 @@ def receiver_receive_file(sock, peer_addr, save_path, expected_bytes):
                     return True
 
                 pkt, _ = recv_with_timeout(sock, TIMEOUT_S)
-                print(f"Received packet: {pkt}")
+                # print(f"Received packet: {pkt}")
                 if pkt is None:
                     print("Data transmission terminated prematurely.")
                     return False
